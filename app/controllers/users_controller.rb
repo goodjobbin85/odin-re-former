@@ -13,7 +13,22 @@ class UsersController < ApplicationController
 		else
 			render :new
 		end
+	end
 
+	def edit
+		@user = User.find(params[:id])
+	end
+
+	def update
+		@user = User.find(params[:id])
+		@user.update(user_params)
+		if @user.save
+			flash[:success] = "User succesfully saved."
+			redirect_to new_user_path
+		else
+			flash[:danger] = "Please enter valid information."
+			render :edit
+		end
 	end
 
 	def user_params
